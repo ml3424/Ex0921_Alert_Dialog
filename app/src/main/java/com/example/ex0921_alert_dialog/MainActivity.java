@@ -1,8 +1,11 @@
 package com.example.ex0921_alert_dialog;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,9 +18,19 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.Random;
 
+/**
+ * @author	Maya Leibovich mayaLeibovich3@gmail.com
+ * @version	 1.2
+ * @since	26/1/2024
+ * Alert dialog practice
+ */
+
+
 public class MainActivity extends AppCompatActivity {
     AlertDialog.Builder adb;
     Button btnMsg, btnMsgImg, btnMsgImg1, btnMsgImg2, btnMsgImg3;
+
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
         adb = new AlertDialog.Builder(this);
     }
 
+    /**
+     * first btn onclick
+     * @param	View view
+     * @return	none
+     */
     public void clickMsg(View view) {
         adb.setTitle("Only text");
         adb.setMessage("Still only text");
@@ -40,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
         ad.show();
     }
 
+    /**
+     * second btn onclick
+     * @param	View view
+     * @return	none
+     */
     public void clickMsgImg(View view) {
         adb.setTitle("Text and image");
         adb.setMessage("text and image");
@@ -48,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
         ad.show();
     }
 
+    /**
+     * third btn onclick
+     * @param	View view
+     * @return	none
+     */
     public void clickMsgImg1(View view) {
         adb.setTitle("Text and image");
         adb.setMessage("and a button!");
@@ -64,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
         ad.show();
     }
 
+    /**
+     * forth btn onclick
+     * @param	View view
+     * @return	none
+     */
     public void clickMsgImg2(View view) {
         adb.setTitle("Text and image");
         adb.setMessage("and 2 buttons!");
@@ -90,6 +123,11 @@ public class MainActivity extends AppCompatActivity {
         ad.show();
     }
 
+    /**
+     * fifth btn onclick
+     * @param	View view
+     * @return	none
+     */
     public void clickMsgImg3(View view) {
         adb.setTitle("Text and image");
         adb.setMessage("and 3 buttons!");
@@ -116,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 View view = findViewById(android.R.id.content);
                 int randomColor = generateRandomColor();
-                view.setBackgroundColor(Color.rgb(255,255,255)); // set background color to white
+                view.setBackgroundColor(Color.rgb(255, 255, 255)); // set background color to white
 
                 dialog.cancel();
             }
@@ -126,11 +164,46 @@ public class MainActivity extends AppCompatActivity {
         ad.show();
     }
 
+    /**
+     * generate color
+     * @return	int which is a color
+     */
     private int generateRandomColor() {
         Random random = new Random(); //random obj
         int red = random.nextInt(256); // 0-255 range
         int green = random.nextInt(256);
         int blue = random.nextInt(256);
         return Color.rgb(red, green, blue); // create the color(int)
+    }
+
+
+    /**
+     * create an option menu
+     * @return	boolean
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+
+    /**
+     * create the options in an option menu
+     * @return	boolean
+     */
+    public boolean onOptionsItemSelected(MenuItem item) {
+        String st = item.getTitle().toString();
+        if(st.equals("Credits"))
+        {
+            intent = new Intent(this, CreditsActivity.class);
+            startActivity(intent);
+        }
+        else if(st.equals("Main"))
+        {
+            intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
